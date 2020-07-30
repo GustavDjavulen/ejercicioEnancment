@@ -25,10 +25,8 @@ export class FirestoreService {
   async guardarRegistro(numero: number, multiplos) {
     const newMultiplos = [];
 
-    await multiplos.forEach(async multiplos2 => {
-      await multiplos2.forEach(o => {
-        newMultiplos.push(o);
-      });
+    await multiplos.forEach(multiplos2 => {
+      newMultiplos.push(...multiplos2);
     });
 
     multiplos = newMultiplos;

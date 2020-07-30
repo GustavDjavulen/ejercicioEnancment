@@ -87,7 +87,6 @@ export class GeneradorComponent implements OnInit {
       if (multiplos.length % 240 !== 0) {
         this.multiplos.push(multiplos);
       }
-      console.log(this.multiplos);
 
       // Guardamos el registro en la base de datos
       // ================================

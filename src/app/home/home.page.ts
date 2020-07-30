@@ -18,15 +18,11 @@ export class HomePage {
   // ================================
   cargar(o) {
     const multiplos = [];
-    console.log(o.multiplos.length);
-    console.log(o.multiplos.length / 240);
     for (let i = 0; i < (o.multiplos.length / 240); i++) {
       const posicion = i * 240;
       const array = o.multiplos.slice(posicion, posicion + 240);
       multiplos.push(array);
     }
-
-    console.log(multiplos);
 
     // Reasignamos los valores para interpretarlos en el
     // componente del generador
