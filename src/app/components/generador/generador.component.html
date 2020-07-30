@@ -6,7 +6,7 @@
   </ion-header>
   
   <!-- Contenido con scroll para la pantalla -->
-  <ion-content>
+  <ion-content [fullscreen]="true">
   
     <br>
     <div class="contenido">
@@ -45,10 +45,10 @@
       </ion-row>
   
       <!-- En dado caso que tengamos multiplos calculados se muestran -->
-      <ion-row *ngIf="multiplos.length !== 0">
+      <ion-row *ngIf="multiplos[pagina - 1]">
 
         <!-- Creamos una columna por cada multiplo calculado -->
-        <ion-col *ngFor="let o of multiplos" size="4">
+        <ion-col *ngFor="let o of multiplos[pagina - 1]" size="4">
 
           <!-- Creamos un chip con el numero y el color si es multiplos de 
                3: amarillo, 5: rojo y 7: azul -->
@@ -63,8 +63,61 @@
 
         </ion-col>
 
+      </ion-row> <!-- Aqui terminan las columnas de multiplos -->
+
+      <!-- Creamos un paginado -->
+      <ion-row *ngIf="multiplos.length > 1">
+
+        <ion-col size="auto">
+          <ion-buttons>
+            <ion-button (click)="pagina = 1" color="primary" [disabled]="(pagina === 1)">
+              <ion-icon slot="icon-only" name="play-back"></ion-icon>
+            </ion-button>
+            <ion-button (click)="pagina = pagina - 1" color="primary" [disabled]="(pagina === 1)">
+              <ion-icon slot="icon-only" name="arrow-back-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-col>
+
+        <ion-col size="">
+          <!-- Renglon que contiene la lectura de las paginas -->
+          <ion-row class="lleno ion-align-items-center ion-justify-content-center">
+
+            <!-- Columna que solo contiene el texto "Pagina: " -->
+            <ion-col size="auto">
+              <h6 style="padding: 0px; margin: 0px;">Pagina: </h6>
+            </ion-col>
+
+            <!-- Columan que contiene la pagina que actualmente se esta visualizando -->
+            <ion-col size="auto">
+              <input style="width: 60px; font-weight: bold;" class="texto ion-text-right" type="number" min="1" [max]="multiplos.length" [(ngModel)]="pagina">
+            </ion-col>
+
+            <!-- Columna que solo hace espacio y contiene el texto "/" -->
+            <ion-col size="auto">
+              <span style="font-size: 22px;"><b>/</b></span>
+            </ion-col>
+
+            <!-- Columna que contiene el total de paginas del documento visualizado -->
+            <ion-col size="auto">
+              <input style="width: 60px; font-weight: bold;" [disabled]="true" class="texto ion-text-right" type="number" [value]="multiplos.length">
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="auto">
+          <ion-buttons>
+            <ion-button (click)="pagina = pagina + 1" color="primary" [disabled]="(pagina === multiplos.length)">
+              <ion-icon slot="icon-only" name="arrow-forward-circle"></ion-icon>
+            </ion-button>
+            <ion-button (click)="pagina = multiplos.length" color="primary" [disabled]="(pagina === multiplos.length)">
+              <ion-icon slot="icon-only" name="play-forward"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-col>
+
       </ion-row>
-  
+
     </div>
   
   </ion-content>

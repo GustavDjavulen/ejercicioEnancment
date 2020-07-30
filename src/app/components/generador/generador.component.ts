@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { Multiplo } from '../../interfaces/multiplo.interface';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-generador',
@@ -9,8 +10,12 @@ import { Multiplo } from '../../interfaces/multiplo.interface';
 })
 export class GeneradorComponent implements OnInit {
 
+  @ViewChild(IonContent, {static: true}) iContent: IonContent;
+
   @Input() valor = 0;
-  @Input() multiplos: Multiplo[] = [];
+  @Input() multiplos: any[] = [];
+
+  pagina = 1;
 
   emptyText = new Array(81);
 
@@ -26,8 +31,9 @@ export class GeneradorComponent implements OnInit {
     // Revisamos si se ha ingresado un valor
     if (this.valor) {
 
-      // Vaciamos la matriz con los multiplo
+      // Vaciamos la matriz con los multiplos
       this.multiplos = [];
+      let multiplos = [];
 
       for (let i = 0; i <= this.valor; i++) {
 
@@ -71,9 +77,18 @@ export class GeneradorComponent implements OnInit {
 
         // Por ultimo empujamos el multiplo a una matriz
         // ================================
-        this.multiplos.push(multiplo);
+        multiplos.push(multiplo);
 
+        if (multiplos.length === 240) {
+          this.multiplos.push(multiplos);
+          multiplos = [];
+        }
       }
+      if (multiplos.length % 240 !== 0) {
+        this.multiplos.push(multiplos);
+      }
+      console.log(this.multiplos);
+
       // Guardamos el registro en la base de datos
       // ================================
       this.guardarRegistro();
@@ -82,7 +97,6 @@ export class GeneradorComponent implements OnInit {
 
   // Función que guarda el registro del multiplo
   guardarRegistro() {
-    console.log('1');
     this.firestoreS.guardarRegistro(this.valor, this.multiplos);
   }
 

@@ -22,7 +22,16 @@ export class FirestoreService {
   // ================================
     // numero: valor con el cual se calcularon los multiplos
     // multiplos: matriz generada para la interpretación de los multiplos
-  guardarRegistro(numero: number, multiplos: Multiplo[]) {
+  async guardarRegistro(numero: number, multiplos) {
+    const newMultiplos = [];
+
+    await multiplos.forEach(async multiplos2 => {
+      await multiplos2.forEach(o => {
+        newMultiplos.push(o);
+      });
+    });
+
+    multiplos = newMultiplos;
 
     // Creamos el registro ya con sus propiedades
     const registro = {
