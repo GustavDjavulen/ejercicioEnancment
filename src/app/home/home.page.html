@@ -1,0 +1,18 @@
+<!-- Creamos una vista dividida -->
+<ion-split-pane contentId="menu-content" when="xs" style="--side-width: 250px">
+
+  <!-- Slide Menu para mostrar los registros -->
+  <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
+
+    <!-- Componente que contiene interpreta el menu de registros -->
+    <app-slide-menu class="lleno" (cargarRegistro)="cargar($event)"></app-slide-menu>
+  </ion-menu>
+
+  <!-- Pantalla a dividir -->
+  <ion-app id="menu-content">
+
+    <!-- Componente que contiene el generador -->
+    <app-generador class="lleno" [valor]="numero" [multiplos]="multiplos"></app-generador>
+  </ion-app>
+
+</ion-split-pane>

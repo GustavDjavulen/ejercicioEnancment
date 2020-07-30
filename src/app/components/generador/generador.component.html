@@ -1,0 +1,70 @@
+  <!-- Cabezera de la pantalla -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-title class="ion-text-center">Calculador de multiplos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <!-- Contenido con scroll para la pantalla -->
+  <ion-content>
+  
+    <br>
+    <div class="contenido">
+  
+      <!-- Se crea un renglon para contener el input y el botton -->
+      <ion-row class="ion-align-items-center">
+
+        <!-- Columna que contiene el input -->
+        <ion-col size="8">
+
+          <!-- Item con input para asignar el valor a calcular -->
+          <ion-item>
+            <ion-label position="floating">Ingrese un Valor</ion-label>
+            <ion-input type="number" [(ngModel)]="valor"></ion-input>
+          </ion-item>
+        </ion-col>
+  
+        <!-- Columna que contiene el botton-->
+        <ion-col size="4">
+
+          <!-- Boton que calcula los multiplos del valor -->
+          <ion-button (click)="generarMultipos()" expand="block" fill="outline" shape="round">
+            Obtener Multiplos
+          </ion-button>
+        </ion-col>
+      </ion-row> <!-- Termina el renglon que contiene el input y el botton -->
+  
+      <!-- Creamos un separador pequeño -->
+      <div class="separador-h"></div>
+  
+      <!-- En dado caso que no tengamos nada calculado se muestra un contenido esqueleto -->
+      <ion-row *ngIf="multiplos.length === 0">
+        <ion-col *ngFor="let o of emptyText" size="4">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+  
+      <!-- En dado caso que tengamos multiplos calculados se muestran -->
+      <ion-row *ngIf="multiplos.length !== 0">
+
+        <!-- Creamos una columna por cada multiplo calculado -->
+        <ion-col *ngFor="let o of multiplos" size="4">
+
+          <!-- Creamos un chip con el numero y el color si es multiplos de 
+               3: amarillo, 5: rojo y 7: azul -->
+          <ion-chip [color]="o.color" outline="true">
+            <ion-label>{{o.numero}}</ion-label>
+          </ion-chip>
+
+          <!-- Creamos un label con los multiplos si es que tiene de 3, 5 o 7 -->
+          <ion-label *ngIf="o.multiplos.length !== 0">
+            Multiplo de: <span *ngFor="let m of o.multiplos">{{m}}, &nbsp;</span>
+          </ion-label>
+
+        </ion-col>
+
+      </ion-row>
+  
+    </div>
+  
+  </ion-content>

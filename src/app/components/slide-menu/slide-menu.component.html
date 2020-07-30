@@ -1,0 +1,28 @@
+<!-- Cabezera del menu -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Registros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido con Scroll para los registros -->
+<ion-content>
+  <div class="contenido">
+
+    <!-- Creamos una lista -->
+    <ion-list style="background: transparent;">
+
+      <!-- Creamos un componente por cada registro en la base de datos -->
+      <!-- En dado caso de dar click se muestra el registro -->
+      <ion-item *ngFor="let o of env.registros" [button]="true" detail (click)="cargar(o)">
+
+        <!-- Muestro a que valor pertenece el Registro -->
+        <ion-label>
+          <h3>Registro con valor: [{{o.numero}}]</h3>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+</ion-content>
